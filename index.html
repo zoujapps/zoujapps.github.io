@@ -2,135 +2,135 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZoujApps - Developer Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>ZoujApps - Professional Mobile Apps</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 40px 20px;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(145deg, #f6f9fc 0%, #eef2f7 100%);
+            color: #1a2c3e;
+            line-height: 1.5;
         }
+
         /* Google Translate Widget */
         .translate-container {
             position: fixed;
-            top: 10px;
+            top: 16px;
             right: 20px;
             z-index: 1000;
-            background: white;
-            padding: 5px 10px;
-            border-radius: 30px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(8px);
+            padding: 6px 14px;
+            border-radius: 40px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border: 1px solid rgba(0,0,0,0.05);
         }
         .goog-te-banner-frame { display: none !important; }
         body { top: 0px !important; }
+
         .container {
-            max-width: 1200px;
-            margin: 60px auto 20px;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
         }
+
+        /* Header */
         .header {
             text-align: center;
-            color: white;
-            margin-bottom: 40px;
+            padding: 60px 0 40px;
         }
-        .header h1 {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
+        .logo {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1E3C72, #2A5298);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
         }
-        .header p {
+        .tagline {
             font-size: 1.2rem;
-            opacity: 0.9;
+            color: #4a627a;
+            margin-top: 12px;
         }
+
+        /* App Grid */
         .apps-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 32px;
+            margin: 40px 0 60px;
         }
+
         .app-card {
             background: white;
             border-radius: 32px;
             overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            width: 350px;
-            transition: transform 0.3s ease;
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
+            transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+            cursor: pointer;
+            border: 1px solid rgba(0,0,0,0.05);
         }
         .app-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
+            box-shadow: 0 30px 45px -12px rgba(0,0,0,0.2);
         }
-        .app-icon {
+
+        .card-icon {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 30px;
+            padding: 40px 0;
             text-align: center;
-        }
-        .app-icon span {
             font-size: 4rem;
         }
-        .app-details {
-            padding: 24px;
+        .card-content {
+            padding: 28px;
         }
-        .app-details h2 {
-            color: #333;
-            margin-bottom: 8px;
-        }
-        .app-details .package {
-            color: #777;
-            font-size: 0.8rem;
+        .app-title {
+            font-size: 1.8rem;
+            font-weight: 700;
             margin-bottom: 12px;
-            word-break: break-all;
+            color: #1e2f3e;
         }
-        .app-details .description {
-            color: #555;
+        .app-description {
+            color: #5a6e7c;
+            margin-bottom: 24px;
             line-height: 1.5;
-            margin-bottom: 20px;
-            font-size: 0.9rem;
         }
-        .buttons {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .btn {
-            flex: 1;
-            display: inline-block;
-            text-align: center;
-            padding: 10px 16px;
+        .btn-details {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #1e3c72;
+            color: white;
+            padding: 10px 24px;
             border-radius: 40px;
             text-decoration: none;
-            font-weight: bold;
-            font-size: 0.85rem;
-            transition: opacity 0.3s;
+            font-weight: 600;
+            transition: background 0.2s;
         }
-        .btn-download {
-            background: #4CAF50;
-            color: white;
+        .btn-details:hover {
+            background: #0f2a4f;
         }
-        .btn-policy {
-            background: #f0f0f0;
-            color: #333;
-        }
-        .btn:hover {
-            opacity: 0.8;
-        }
+
+        /* Footer */
         .footer {
             text-align: center;
-            margin-top: 50px;
-            color: white;
-            font-size: 0.8rem;
+            padding: 40px 0;
+            border-top: 1px solid rgba(0,0,0,0.08);
+            margin-top: 40px;
+            color: #5a6e7c;
         }
-        .footer a {
-            color: white;
-            text-decoration: underline;
-        }
-        @media (max-width: 800px) {
-            .apps-grid { gap: 20px; }
-            .app-card { width: 100%; max-width: 400px; }
-            .header h1 { font-size: 2rem; }
+
+        @media (max-width: 700px) {
+            .container { padding: 0 20px; }
+            .logo { font-size: 2.5rem; }
+            .apps-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -142,56 +142,41 @@
 
 <div class="container">
     <div class="header">
-        <h1>📱 ZoujApps</h1>
-        <p>Simple, useful apps for everyday life</p>
+        <div class="logo">ZoujApps</div>
+        <div class="tagline">Innovative mobile apps that simplify your life</div>
     </div>
 
     <div class="apps-grid">
-        <!-- تطبيق Driver Assistant -->
-        <div class="app-card">
-            <div class="app-icon">
-                <span>🚗</span>
-            </div>
-            <div class="app-details">
-                <h2>Driver Assistant</h2>
-                <div class="package">com.zoujapps.driver_assistant</div>
-                <div class="description">
-                    Smart vehicle maintenance tracker. Manage multiple vehicles, get reminders for oil changes, filters, timing belt, and more. Works offline.
-                </div>
-                <div class="buttons">
-                    <a href="https://play.google.com/store/apps/details?id=com.zoujapps.driver_assistant" class="btn btn-download" target="_blank">📲 Download</a>
-                    <a href="privacy-driver-assistant.html" class="btn btn-policy">📜 Privacy</a>
-                </div>
+        <!-- Driver Assistant Card -->
+        <div class="app-card" onclick="location.href='driver-assistant.html';">
+            <div class="card-icon">🚗</div>
+            <div class="card-content">
+                <h2 class="app-title">Driver Assistant</h2>
+                <p class="app-description">Smart vehicle maintenance tracker with reminders, multi-vehicle support, and automatic odometer updates.</p>
+                <span class="btn-details">View details →</span>
             </div>
         </div>
 
-        <!-- هنا يمكنك إضافة تطبيقات جديدة بنفس النمط في المستقبل -->
-        <!-- مثال لتطبيق ثانٍ (قم بنسخ هذا القسم ولصقه وأعدل البيانات)
-        <div class="app-card">
-            <div class="app-icon">
-                <span>📝</span>
-            </div>
-            <div class="app-details">
-                <h2>Notes App</h2>
-                <div class="package">com.zoujapps.notes</div>
-                <div class="description">
-                    Simple and fast note-taking app with cloud sync.
-                </div>
-                <div class="buttons">
-                    <a href="https://play.google.com/store/apps/details?id=com.zoujapps.notes" class="btn btn-download" target="_blank">📲 Download</a>
-                    <a href="privacy-notes.html" class="btn btn-policy">📜 Privacy</a>
-                </div>
+        <!-- قالب لتطبيقات مستقبلية (انسخ هذا الكتلة وأضفها عند إنشاء تطبيق جديد) -->
+        <!-- 
+        <div class="app-card" onclick="location.href='your-next-app.html';">
+            <div class="card-icon">📱</div>
+            <div class="card-content">
+                <h2 class="app-title">Next App Name</h2>
+                <p class="app-description">Short description of the app.</p>
+                <span class="btn-details">View details →</span>
             </div>
         </div>
         -->
     </div>
 
     <div class="footer">
-        <p>© 2026 ZoujApps | Developer: Youssef Zoujaji | <a href="mailto:zoujapps@gmail.com">zoujapps@gmail.com</a></p>
+        <p>© 2026 ZoujApps. All rights reserved.</p>
+        <p style="margin-top: 8px; font-size: 0.8rem;">Contact: zoujapps@gmail.com</p>
     </div>
 </div>
 
-<script type="text/javascript">
+<script>
     function googleTranslateElementInit() {
         new google.translate.TranslateElement({
             pageLanguage: 'en',
@@ -201,6 +186,6 @@
         }, 'google_translate_element');
     }
 </script>
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
