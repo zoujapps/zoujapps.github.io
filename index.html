@@ -5,174 +5,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title translate="no">ZoujApps - Innovative Mobile Apps</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
             background: radial-gradient(circle at 10% 30%, #f8fafc, #eef2f8);
             min-height: 100vh;
             color: #0a2b3e;
         }
-
         .translate-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1100;
-            background: rgba(255,255,255,0.9);
-            backdrop-filter: blur(12px);
-            padding: 6px 16px;
-            border-radius: 60px;
+            position: fixed; top: 20px; right: 20px; z-index: 1100;
+            background: rgba(255,255,255,0.9); backdrop-filter: blur(12px);
+            padding: 6px 16px; border-radius: 60px;
             box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-            border: 1px solid rgba(255,255,255,0.5);
-            font-size: 14px;
+            border: 1px solid rgba(255,255,255,0.5); font-size: 14px;
         }
         .goog-te-banner-frame { display: none !important; }
         body { top: 0px !important; }
         .skiptranslate iframe { display: none !important; }
         .goog-te-gadget { color: transparent !important; }
         .goog-te-gadget .goog-te-combo { 
-            padding: 6px 14px;
-            border-radius: 40px;
-            border: 1px solid #cbd5e1;
-            background: white;
-            font-family: inherit;
-            font-size: 13px;
-            font-weight: 500;
-            cursor: pointer;
+            padding: 6px 14px; border-radius: 40px;
+            border: 1px solid #cbd5e1; background: white;
+            font-family: inherit; font-size: 13px; font-weight: 500; cursor: pointer;
         }
-
         .hero {
             background: linear-gradient(125deg, #0b2f44 0%, #1b5379 100%);
-            color: white;
-            padding: 70px 24px 90px;
-            text-align: center;
-            clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
-            margin-bottom: -10px;
+            color: white; padding: 70px 24px 90px; text-align: center;
+            clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%); margin-bottom: -10px;
         }
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            letter-spacing: -0.02em;
-            margin-bottom: 20px;
-        }
+        .hero h1 { font-size: 4rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 20px; }
         .hero h1 span {
             background: linear-gradient(130deg, #FFE6B0, #FFB347);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
+            background-clip: text; -webkit-background-clip: text; color: transparent;
         }
-        .hero p {
-            font-size: 1.3rem;
-            opacity: 0.92;
-            max-width: 650px;
-            margin: 0 auto;
-        }
-
-        .container {
-            max-width: 1300px;
-            margin: -30px auto 70px;
-            padding: 0 24px;
-            position: relative;
-            z-index: 5;
-        }
-
-        .apps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 40px;
-            margin-top: 20px;
-        }
+        .hero p { font-size: 1.3rem; opacity: 0.92; max-width: 650px; margin: 0 auto; }
+        .container { max-width: 1300px; margin: -30px auto 70px; padding: 0 24px; position: relative; z-index: 5; }
+        .apps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 40px; margin-top: 20px; }
         .app-card {
-            background: rgba(255,255,255,0.98);
-            border-radius: 48px;
+            background: rgba(255,255,255,0.98); border-radius: 48px;
             box-shadow: 0 30px 45px -20px rgba(0,0,0,0.2);
             transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            overflow: hidden;
-            cursor: pointer;
-            backdrop-filter: blur(2px);
+            overflow: hidden; backdrop-filter: blur(2px);
             border: 1px solid rgba(255,255,255,0.6);
         }
-        .app-card:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 40px 60px -22px rgba(0,0,0,0.35);
-        }
+        .app-card:hover { transform: translateY(-12px); box-shadow: 0 40px 60px -22px rgba(0,0,0,0.35); }
         .card-img {
             background: linear-gradient(135deg, #1e4e6e, #0c3146);
-            padding: 45px 20px;
-            text-align: center;
+            padding: 45px 20px; text-align: center;
         }
-        .card-img .app-icon {
-            font-size: 5.5rem;
-            filter: drop-shadow(0 12px 14px rgba(0,0,0,0.3));
-        }
-        .card-content {
-            padding: 32px 28px 36px;
-        }
-        .card-content h3 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: #0a2b3e;
-        }
-        .card-content p {
-            color: #2c4b6e;
-            line-height: 1.5;
-            font-size: 1rem;
-        }
-        .feature-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 24px 0 20px;
-        }
+        .card-img .app-icon { font-size: 5.5rem; filter: drop-shadow(0 12px 14px rgba(0,0,0,0.3)); }
+        .card-content { padding: 32px 28px 36px; }
+        .card-content h3 { font-size: 2rem; font-weight: 700; margin-bottom: 12px; color: #0a2b3e; }
+        .card-content p { color: #2c4b6e; line-height: 1.5; font-size: 1rem; }
+        .feature-tags { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0 20px; }
         .feature-tag {
-            background: #eef3fc;
-            padding: 6px 18px;
-            border-radius: 40px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #1b5379;
-            letter-spacing: 0.3px;
+            background: #eef3fc; padding: 6px 18px; border-radius: 40px;
+            font-size: 0.75rem; font-weight: 600; color: #1b5379; letter-spacing: 0.3px;
         }
-        .btn-details {
-            background: #0a2b3e;
-            color: white;
-            border: none;
-            padding: 14px 0;
-            width: 100%;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.25s;
-            margin-top: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+        .app-buttons { display: flex; gap: 12px; margin-top: 20px; }
+        .btn {
+            background: #0a2b3e; color: white; border: none; padding: 14px 0;
+            width: 100%; border-radius: 50px; font-weight: 700; font-size: 1rem;
+            cursor: pointer; transition: all 0.25s; text-decoration: none;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-        .btn-details:hover {
-            background: #1b5379;
-            transform: scale(1.02);
+        .btn-privacy {
+            background: transparent; color: #0a2b3e; border: 2px solid #0a2b3e;
         }
-
+        .btn:hover { background: #1b5379; transform: scale(1.02); }
+        .btn-privacy:hover { background: #0a2b3e; color: white; }
         footer {
-            text-align: center;
-            padding: 36px 24px;
-            background: #0a2b3e;
-            color: #b9d0e5;
-            font-size: 0.85rem;
+            text-align: center; padding: 36px 24px; background: #0a2b3e;
+            color: #b9d0e5; font-size: 0.85rem;
         }
-        footer a {
-            color: #FFD966;
-            text-decoration: none;
-        }
-
+        footer a { color: #FFD966; text-decoration: none; }
         @media (max-width: 700px) {
             .hero h1 { font-size: 2.5rem; }
             .hero p { font-size: 1rem; }
@@ -194,39 +100,45 @@
 
 <div class="container">
     <div class="apps-grid">
-        <!-- تطبيق Expense Monitor -->
-        <div class="app-card" onclick="location.href='expense-monitor-privacy.html';">
+        <!-- ★ تطبيق Expense Monitor -->
+        <div class="app-card">
             <div class="card-img">
                 <div class="app-icon">💰📊</div>
             </div>
             <div class="card-content">
                 <h3>Expense Monitor</h3>
-                <p>Smart daily loss tracker. Log your expenses every day and get weekly, monthly & yearly summaries instantly.</p>
+                <p>تتبع ذكي للخسائر اليومية. سجّل مصروفاتك واحصل على ملخصات أسبوعية وشهرية وسنوية فوراً.</p>
                 <div class="feature-tags">
-                    <span class="feature-tag">📅 Daily tracking</span>
-                    <span class="feature-tag">📊 Summaries</span>
-                    <span class="feature-tag">🌍 Multi‑language</span>
-                    <span class="feature-tag">🔒 100% offline</span>
+                    <span class="feature-tag">📅 تتبع يومي</span>
+                    <span class="feature-tag">📊 ملخصات</span>
+                    <span class="feature-tag">🌍 متعدد اللغات</span>
+                    <span class="feature-tag">🔒 بدون إنترنت</span>
                 </div>
-                <button class="btn-details">📲 Discover more →</button>
+                <div class="app-buttons">
+                    <a href="expense-monitor-download.html" class="btn">📲 تحميل</a>
+                    <a href="expense-monitor-privacy.html" class="btn btn-privacy">🔒 سياسة الخصوصية</a>
+                </div>
             </div>
         </div>
 
-        <!-- تطبيق Driver Assistant -->
-        <div class="app-card" onclick="location.href='driver-assistant.html';">
+        <!-- ★ تطبيق Driver Assistant (نفس الموجود سابقاً مع إضافة زر سياسة الخصوصية) -->
+        <div class="app-card">
             <div class="card-img">
                 <div class="app-icon">🚗⚙️</div>
             </div>
             <div class="card-content">
                 <h3>Driver Assistant</h3>
-                <p>Intelligent vehicle maintenance tracker. Never miss an oil change or filter replacement again.</p>
+                <p>متتبع ذكي لصيانة المركبات. لا تفوّت تغيير الزيت أو الفلاتر بعد اليوم.</p>
                 <div class="feature-tags">
-                    <span class="feature-tag">📊 Multi‑vehicle</span>
-                    <span class="feature-tag">⏰ Smart reminders</span>
-                    <span class="feature-tag">📈 Auto odometer</span>
-                    <span class="feature-tag">🔒 100% offline</span>
+                    <span class="feature-tag">📊 مركبات متعددة</span>
+                    <span class="feature-tag">⏰ تذكيرات ذكية</span>
+                    <span class="feature-tag">📈 عداد تلقائي</span>
+                    <span class="feature-tag">🔒 100% دون إنترنت</span>
                 </div>
-                <button class="btn-details">📲 Discover more →</button>
+                <div class="app-buttons">
+                    <a href="driver-assistant.html" class="btn">📲 تحميل</a>
+                    <a href="driver-assistant-privacy.html" class="btn btn-privacy">🔒 سياسة الخصوصية</a>
+                </div>
             </div>
         </div>
     </div>
