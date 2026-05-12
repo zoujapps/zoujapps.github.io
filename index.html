@@ -47,6 +47,7 @@
             transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             overflow: hidden; backdrop-filter: blur(2px);
             border: 1px solid rgba(255,255,255,0.6);
+            cursor: pointer;
         }
         .app-card:hover { transform: translateY(-12px); box-shadow: 0 40px 60px -22px rgba(0,0,0,0.35); }
         .card-img {
@@ -55,25 +56,84 @@
         }
         .card-img .app-icon { font-size: 5.5rem; filter: drop-shadow(0 12px 14px rgba(0,0,0,0.3)); }
         .card-content { padding: 32px 28px 36px; }
-        .card-content h3 { font-size: 2rem; font-weight: 700; margin-bottom: 12px; color: #0a2b3e; }
-        .card-content p { color: #2c4b6e; line-height: 1.5; font-size: 1rem; }
-        .feature-tags { display: flex; flex-wrap: wrap; gap: 10px; margin: 24px 0 20px; }
-        .feature-tag {
-            background: #eef3fc; padding: 6px 18px; border-radius: 40px;
-            font-size: 0.75rem; font-weight: 600; color: #1b5379; letter-spacing: 0.3px;
+        .card-content h3 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; color: #0a2b3e; }
+        .card-content .hook {
+            font-size: 1rem;
+            color: #FFB347;
+            font-weight: 600;
+            margin-bottom: 16px;
         }
-        .app-buttons { display: flex; gap: 12px; margin-top: 20px; }
-        .btn {
+        .card-content p { color: #2c4b6e; line-height: 1.5; font-size: 0.95rem; margin-bottom: 20px; }
+        .discover-btn {
             background: #0a2b3e; color: white; border: none; padding: 14px 0;
             width: 100%; border-radius: 50px; font-weight: 700; font-size: 1rem;
-            cursor: pointer; transition: all 0.25s; text-decoration: none;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
+            cursor: pointer; transition: all 0.25s; text-align: center;
+            display: inline-block; text-decoration: none;
         }
-        .btn-privacy {
-            background: transparent; color: #0a2b3e; border: 2px solid #0a2b3e;
+        .discover-btn:hover { background: #1b5379; transform: scale(1.02); }
+        
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(6px);
         }
-        .btn:hover { background: #1b5379; transform: scale(1.02); }
-        .btn-privacy:hover { background: #0a2b3e; color: white; }
+        .modal-content {
+            background: white;
+            max-width: 550px;
+            width: 90%;
+            border-radius: 48px;
+            padding: 32px 28px;
+            position: relative;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 40px 70px rgba(0,0,0,0.4);
+        }
+        .modal-close {
+            position: absolute;
+            top: 20px; right: 24px;
+            font-size: 32px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #0a2b3e;
+            transition: 0.2s;
+        }
+        .modal-close:hover { color: #FFB347; }
+        .modal-icon { font-size: 4rem; text-align: center; margin-bottom: 12px; }
+        .modal-title { font-size: 2rem; font-weight: 800; margin-bottom: 8px; text-align: center; }
+        .modal-description { color: #2c4b6e; line-height: 1.6; margin: 20px 0; }
+        .modal-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+        .modal-feature {
+            background: #eef3fc;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #1b5379;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+        }
+        .modal-buttons .btn {
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+        }
         footer {
             text-align: center; padding: 36px 24px; background: #0a2b3e;
             color: #b9d0e5; font-size: 0.85rem;
@@ -99,77 +159,121 @@
 </section>
 
 <div class="container">
-    <div class="apps-grid">
-        <!-- Expense Monitor -->
-        <div class="app-card">
-            <div class="card-img">
-                <div class="app-icon">💰📊</div>
-            </div>
-            <div class="card-content">
-                <h3>Expense Monitor</h3>
-                <p>تتبع ذكي للخسائر اليومية. سجّل مصروفاتك واحصل على ملخصات أسبوعية وشهرية وسنوية فوراً.</p>
-                <div class="feature-tags">
-                    <span class="feature-tag">📅 تتبع يومي</span>
-                    <span class="feature-tag">📊 ملخصات</span>
-                    <span class="feature-tag">🌍 متعدد اللغات</span>
-                    <span class="feature-tag">🔒 بدون إنترنت</span>
-                </div>
-                <div class="app-buttons">
-                    <a href="https://play.google.com/store/apps/details?id=com.zoujapps.expense_monitor" class="btn">📲 تحميل</a>
-                    <a href="expense-monitor-privacy.html" class="btn btn-privacy">🔒 سياسة الخصوصية</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Driver Assistant -->
-        <div class="app-card">
-            <div class="card-img">
-                <div class="app-icon">🚗⚙️</div>
-            </div>
-            <div class="card-content">
-                <h3>Driver Assistant</h3>
-                <p>متتبع ذكي لصيانة المركبات. لا تفوّت تغيير الزيت أو الفلاتر بعد اليوم.</p>
-                <div class="feature-tags">
-                    <span class="feature-tag">📊 مركبات متعددة</span>
-                    <span class="feature-tag">⏰ تذكيرات ذكية</span>
-                    <span class="feature-tag">📈 عداد تلقائي</span>
-                    <span class="feature-tag">🔒 100% دون إنترنت</span>
-                </div>
-                <div class="app-buttons">
-                    <a href="driver-assistant.html" class="btn">📲 تحميل</a>
-                    <a href="driver-assistant-privacy.html" class="btn btn-privacy">🔒 سياسة الخصوصية</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Profit Track PRO (NEW) -->
-        <div class="app-card">
-            <div class="card-img">
-                <div class="app-icon">📈💼</div>
-            </div>
-            <div class="card-content">
-                <h3>Profit Track Pro</h3>
-                <p>تطبيق متكامل لتسجيل الأرباح والخسائر اليومية. ملخصات دقيقة لأي يوم أو شهر أو سنة (حتى 10 سنوات)، مع دعم كامل للغات والعملات.</p>
-                <div class="feature-tags">
-                    <span class="feature-tag">📆 أرشيف 10 سنوات</span>
-                    <span class="feature-tag">🌍 6 لغات</span>
-                    <span class="feature-tag">💱 50+ عملة</span>
-                    <span class="feature-tag">🌙 وضع مظلم/فاتح</span>
-                    <span class="feature-tag">👁️ زر إخفاء الأرقام</span>
-                    <span class="feature-tag">💾 نسخ احتياطي واستيراد</span>
-                </div>
-                <div class="app-buttons">
-                    <a href="#" class="btn">📲 قريباً</a>
-                    <a href="https://zoujapps.github.io/Profit-Track-Pro-privacy.html" class="btn btn-privacy">🔒 سياسة الخصوصية</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="apps-grid" id="appsGrid"></div>
 </div>
 
 <footer>
     <p>© 2026 <span class="notranslate">ZoujApps</span> — Clean, reliable, user‑first apps</p>
 </footer>
+
+<!-- Modal structure -->
+<div id="appModal" class="modal">
+    <div class="modal-content">
+        <span class="modal-close">&times;</span>
+        <div id="modalIcon" class="modal-icon"></div>
+        <div id="modalTitle" class="modal-title"></div>
+        <div id="modalDescription" class="modal-description"></div>
+        <div id="modalFeatures" class="modal-features"></div>
+        <div id="modalButtons" class="modal-buttons"></div>
+    </div>
+</div>
+
+<script>
+    // App data (all in English)
+    const apps = [
+        {
+            id: "expense",
+            name: "Expense Monitor",
+            icon: "💰📊",
+            hook: "Smart daily loss tracker",
+            shortDesc: "Log your expenses and get instant weekly, monthly & yearly summaries.",
+            fullDesc: "Expense Monitor helps you take control of your daily spending. Record every expense with tags, view detailed charts, and get actionable insights. All data stays on your device – no internet required for core features.",
+            features: ["📅 Daily tracking", "📊 Weekly & monthly summaries", "🌍 Multi-language support", "🔒 100% offline", "📈 Spending insights", "🗓️ Yearly reports"],
+            downloadLink: "https://play.google.com/store/apps/details?id=com.zoujapps.expense_monitor",
+            privacyLink: "expense-monitor-privacy.html"
+        },
+        {
+            id: "driver",
+            name: "Driver Assistant",
+            icon: "🚗⚙️",
+            hook: "Smart vehicle maintenance tracker",
+            shortDesc: "Never miss an oil or filter change again.",
+            fullDesc: "Driver Assistant keeps your car in perfect shape. Add multiple vehicles, set service intervals, and get smart reminders. The automatic odometer and maintenance log make car care effortless – fully offline.",
+            features: ["📊 Multiple vehicles", "⏰ Smart reminders", "📈 Auto odometer", "🔒 100% offline", "🛢️ Oil & filter tracking", "📅 Service history"],
+            downloadLink: "driver-assistant.html",
+            privacyLink: "driver-assistant-privacy.html"
+        },
+        {
+            id: "profit",
+            name: "Profit Track Pro",
+            icon: "📈💼",
+            hook: "Track profits & losses like a pro",
+            shortDesc: "Complete financial diary with 10-year archive, 50+ currencies, 6 languages.",
+            fullDesc: "Profit Track Pro is your ultimate financial companion. Record daily profits and losses, browse any month up to 10 years back, and get accurate summaries. Enjoy dark/light mode, a privacy mask for numbers, full backup/restore, and an interactive tutorial.",
+            features: ["📆 10-year archive", "🌍 6 languages", "💱 50+ currencies", "🌙 Dark/Light mode", "👁️ Privacy mask", "💾 Backup & restore", "📊 Daily/Weekly/Monthly summaries", "📖 Interactive guide"],
+            downloadLink: "#",  // change when available
+            privacyLink: "https://zoujapps.github.io/Profit-Track-Pro-privacy.html"
+        }
+    ];
+
+    // Render cards
+    const grid = document.getElementById("appsGrid");
+    apps.forEach(app => {
+        const card = document.createElement("div");
+        card.className = "app-card";
+        card.innerHTML = `
+            <div class="card-img">
+                <div class="app-icon">${app.icon}</div>
+            </div>
+            <div class="card-content">
+                <h3>${app.name}</h3>
+                <div class="hook">✨ ${app.hook}</div>
+                <p>${app.shortDesc}</p>
+                <button class="discover-btn" data-id="${app.id}">🔍 Discover App</button>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+
+    // Modal elements
+    const modal = document.getElementById("appModal");
+    const closeModal = document.querySelector(".modal-close");
+    const modalIcon = document.getElementById("modalIcon");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalDescription = document.getElementById("modalDescription");
+    const modalFeatures = document.getElementById("modalFeatures");
+    const modalButtons = document.getElementById("modalButtons");
+
+    function openModal(appId) {
+        const app = apps.find(a => a.id === appId);
+        if (!app) return;
+        modalIcon.textContent = app.icon;
+        modalTitle.textContent = app.name;
+        modalDescription.textContent = app.fullDesc;
+        // render feature tags
+        modalFeatures.innerHTML = app.features.map(f => `<span class="modal-feature">${f}</span>`).join("");
+        // render buttons
+        modalButtons.innerHTML = `
+            <a href="${app.downloadLink}" class="btn" target="_blank">📲 Download</a>
+            <a href="${app.privacyLink}" class="btn btn-privacy" target="_blank">🔒 Privacy Policy</a>
+        `;
+        modal.style.display = "flex";
+    }
+
+    // Add event listeners to all discover buttons (after they are rendered)
+    setTimeout(() => {
+        document.querySelectorAll(".discover-btn").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                const id = btn.getAttribute("data-id");
+                openModal(id);
+            });
+        });
+    }, 0);
+
+    closeModal.onclick = () => { modal.style.display = "none"; };
+    window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; };
+</script>
 
 <script>
     function googleTranslateElementInit() {
