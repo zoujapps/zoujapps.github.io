@@ -1,63 +1,343 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Privacy Policy - Wake Enforcer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 0 20px;
-            line-height: 1.6;
-            color: #333;
+        /* ===== RESET ===== */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        h1 { color: #6C5CE7; }
-        h2 { color: #444; margin-top: 24px; }
-        hr { border: 1px solid #eee; margin: 24px 0; }
-        .footer { margin-top: 40px; font-size: 14px; color: #888; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0A0A1A;
+            color: #E8EDF5;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            line-height: 1.7;
+        }
+
+        /* ===== Container ===== */
+        .container {
+            max-width: 820px;
+            width: 100%;
+            background: linear-gradient(145deg, #12122A, #1A1A35);
+            border-radius: 28px;
+            padding: 48px 40px;
+            box-shadow: 0 20px 60px rgba(108, 92, 231, 0.15),
+                        0 0 0 1px rgba(108, 92, 231, 0.08);
+            position: relative;
+            overflow: hidden;
+            margin: 20px auto;
+        }
+
+        /* ===== Decorative Elements ===== */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -120px;
+            right: -120px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(108, 92, 231, 0.08) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        .container::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            left: -100px;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(0, 206, 201, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* ===== Brand ===== */
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 28px;
+            position: relative;
+            z-index: 1;
+        }
+        .brand-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #6C5CE7, #00CEC9);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #fff;
+            flex-shrink: 0;
+            box-shadow: 0 6px 20px rgba(108, 92, 231, 0.30);
+        }
+        .brand-text {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #fff;
+        }
+        .brand-text span {
+            background: linear-gradient(135deg, #6C5CE7, #00CEC9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ===== Title ===== */
+        h1 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            position: relative;
+            z-index: 1;
+            color: #fff;
+        }
+        .sub-title {
+            font-size: 14px;
+            color: #8A9BB8;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== Sections ===== */
+        .section {
+            margin-bottom: 28px;
+            position: relative;
+            z-index: 1;
+        }
+        .section h2 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #6C5CE7;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section h2 .badge {
+            font-size: 11px;
+            background: rgba(108, 92, 231, 0.15);
+            color: #6C5CE7;
+            padding: 2px 14px;
+            border-radius: 20px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+        .section p,
+        .section li {
+            font-size: 15px;
+            color: #C8D0E0;
+            margin-bottom: 8px;
+        }
+        .section ul {
+            padding-left: 22px;
+            list-style: none;
+        }
+        .section ul li::before {
+            content: '▸ ';
+            color: #6C5CE7;
+            font-weight: 700;
+        }
+
+        /* ===== Highlight Box ===== */
+        .highlight-box {
+            background: rgba(108, 92, 231, 0.06);
+            border-left: 3px solid #6C5CE7;
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin: 20px 0 10px;
+        }
+        .highlight-box p {
+            margin-bottom: 0;
+            font-size: 14px;
+            color: #B0C0D8;
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            position: relative;
+            z-index: 1;
+            font-size: 13px;
+            color: #6B7A99;
+        }
+        .footer .date {
+            color: #8A9BB8;
+        }
+        .footer a {
+            color: #6C5CE7;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.2s;
+        }
+        .footer a:hover {
+            opacity: 0.7;
+        }
+
+        /* ===== Back Button ===== */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(108, 92, 231, 0.12);
+            color: #6C5CE7;
+            padding: 10px 22px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: background 0.2s, transform 0.1s;
+            border: 1px solid rgba(108, 92, 231, 0.15);
+            margin-top: 6px;
+        }
+        .back-btn:hover {
+            background: rgba(108, 92, 231, 0.20);
+            transform: translateY(-1px);
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 600px) {
+            .container {
+                padding: 28px 20px;
+                border-radius: 20px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            .brand-text {
+                font-size: 18px;
+            }
+            .section h2 {
+                font-size: 16px;
+            }
+            .section p,
+            .section li {
+                font-size: 14px;
+            }
+            .footer {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>Privacy Policy for Wake Enforcer</h1>
-    <p><strong>Last updated:</strong> July 20, 2026</p>
 
-    <p>Wake Enforcer ("we", "our", "us") respects your privacy. This Privacy Policy explains how we handle your data when you use our application.</p>
+    <div class="container">
 
-    <hr>
+        <!-- ===== Brand ===== -->
+        <div class="brand">
+            <div class="brand-icon">⏰</div>
+            <div class="brand-text">Wake <span>Enforcer</span></div>
+        </div>
 
-    <h2>1. Information We Collect</h2>
-    <p>We do not collect, store, or share any personal information. All data is stored locally on your device only.</p>
+        <!-- ===== Title ===== -->
+        <h1>Privacy Policy</h1>
+        <div class="sub-title">Last updated: July 20, 2026</div>
 
-    <h2>2. Camera Permission</h2>
-    <p>The app uses the camera <strong>only</strong> to take a photo of a sink or faucet as part of the wake-up challenge. This photo is <strong>not stored</strong> on your device or any server, and it is <strong>not shared</strong> with anyone. It is used exclusively for verification purposes within the app.</p>
+        <!-- ===== Content ===== -->
+        <div class="section">
+            <h2>📌 Introduction</h2>
+            <p>
+                At <strong>Wake Enforcer</strong>, we take your privacy seriously.
+                This app is designed to be <strong>secure and transparent</strong> — we do not collect any personal data.
+                All information stays <strong>locally</strong> on your device only.
+            </p>
+        </div>
 
-    <h2>3. Permissions Required</h2>
-    <ul>
-        <li><strong>Camera:</strong> To take a photo of the sink/faucet for verification.</li>
-        <li><strong>Notifications:</strong> To send alarm notifications.</li>
-        <li><strong>Vibration:</strong> For alarm vibration.</li>
-        <li><strong>Foreground Service:</strong> To keep the alarm running and ringing.</li>
-        <li><strong>Schedule Exact Alarm:</strong> To schedule alarms accurately.</li>
-    </ul>
+        <div class="section">
+            <h2>📷 Camera Usage <span class="badge">Required</span></h2>
+            <p>
+                The app uses the camera <strong>only</strong> to take a photo of your sink or faucet
+                as part of the wake-up challenge. This photo is <strong>not stored</strong> on your device or any server,
+                and it is <strong>not shared</strong> with any third party.
+            </p>
+            <div class="highlight-box">
+                <p>✅ The photo is used solely to verify that you have physically gotten up, and is discarded immediately.</p>
+            </div>
+        </div>
 
-    <h2>4. Advertising</h2>
-    <p>This app uses <strong>Google AdMob</strong> to display ads. AdMob may collect anonymized data to serve personalized ads. You can learn more about Google's privacy practices at <a href="https://policies.google.com/privacy" target="_blank">Google Privacy Policy</a>.</p>
+        <div class="section">
+            <h2>🔐 Permissions Required</h2>
+            <ul>
+                <li><strong>Camera</strong> – to capture a photo of the sink/faucet for verification.</li>
+                <li><strong>Notifications</strong> – to send alarm alerts.</li>
+                <li><strong>Vibration</strong> – for alarm vibration.</li>
+                <li><strong>Foreground Service</strong> – to keep the alarm running even in the background.</li>
+                <li><strong>Exact Alarm Scheduling</strong> – to ensure the alarm rings at the exact time you set.</li>
+                <li><strong>Full-Screen Intent</strong> – to display the alarm screen over the lock screen.</li>
+            </ul>
+        </div>
 
-    <h2>5. Data Storage</h2>
-    <p>All data (alarm settings, preferences) are stored <strong>locally</strong> on your device using SharedPreferences. No data is sent to any server or third party.</p>
+        <div class="section">
+            <h2>📊 Advertising (AdMob)</h2>
+            <p>
+                This app uses <strong>Google AdMob</strong> to serve advertisements.
+                AdMob may collect anonymized data to improve ad relevance and quality.
+                You can learn more about Google's privacy practices at
+                <a href="https://policies.google.com/privacy" target="_blank" style="color:#6C5CE7; text-decoration:none; font-weight:600;">Google Privacy Policy</a>.
+            </p>
+        </div>
 
-    <h2>6. Third-Party Services</h2>
-    <ul>
-        <li><strong>Google AdMob</strong> – for advertising.</li>
-        <li><strong>Google ML Kit</strong> – for image labeling (runs locally on device, no data sent to Google).</li>
-    </ul>
+        <div class="section">
+            <h2>💾 Data Storage</h2>
+            <p>
+                All data generated by the app (alarm settings, preferences, etc.) are stored
+                <strong>locally</strong> on your device using <strong>SharedPreferences</strong>.
+                No data is sent to any external server or third party.
+            </p>
+        </div>
 
-    <h2>7. Contact Us</h2>
-    <p>If you have any questions about this Privacy Policy, please contact us at: <strong>support@zoujapps.com</strong></p>
+        <div class="section">
+            <h2>🔗 Third-Party Services</h2>
+            <ul>
+                <li><strong>Google AdMob</strong> – for serving advertisements.</li>
+                <li><strong>Google ML Kit</strong> – for on-device image labeling (runs entirely on your device, no data is sent to Google).</li>
+            </ul>
+        </div>
 
-    <hr>
-    <div class="footer">© 2026 Wake Enforcer. All rights reserved.</div>
+        <div class="section">
+            <h2>📧 Contact Us</h2>
+            <p>
+                If you have any questions or concerns about this Privacy Policy, feel free to reach out to us at:
+                <br />
+                <strong style="color:#6C5CE7; font-size:16px;">support@zoujapps.com</strong>
+            </p>
+        </div>
+
+        <!-- ===== Footer ===== -->
+        <div class="footer">
+            <span>© 2026 Wake Enforcer. All rights reserved.</span>
+            <span class="date">v1.0.0</span>
+        </div>
+
+    </div>
+
 </body>
 </html>
