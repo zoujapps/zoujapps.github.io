@@ -604,19 +604,79 @@ body {
   }
 }
 
-@media (max-width: 560px) {
-  .apps-section { padding: 0 16px 20px; }
+/* =========================================================
+   PHONE — dedicated stacked layout
+   (desktop and tablet keep the grid above untouched)
+========================================================= */
 
-  .apps-grid { grid-template-columns: 1fr; }
+@media (max-width: 600px) {
 
-  .app-card {
-    flex-direction: column;
-    padding: 20px 18px 20px 22px;
+  .hero-section {
+    padding: 44px 18px 30px;
   }
 
-  .app-icon-wrapper { width: 56px; height: 56px; }
-  .app-icon { width: 56px; height: 56px; }
+  .hero-stats {
+    flex-wrap: wrap;
+    gap: 18px 26px;
+  }
+
+  .apps-section { padding: 0 16px 16px; }
+
+  .category-block + .category-block { margin-top: 42px; }
+
+  .category-head {
+    flex-wrap: wrap;
+    row-gap: 6px;
+  }
+
+  .category-title { font-size: 19px; }
+
+  /* one app below another, full width */
+  .apps-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .app-card {
+    padding: 18px 18px 18px 20px;
+    border-radius: 16px;
+    gap: 14px;
+  }
+
+  .app-icon-wrapper,
+  .app-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+  }
+
+  .app-head {
+    gap: 7px 8px;
+  }
+
+  .app-name {
+    font-size: 16px;
+  }
+
+  .app-tagline {
+    font-size: 12.5px;
+  }
+
+  .app-description {
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  /* full-width, tap-friendly download button */
+  .download-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 16px;
+    border-radius: 10px;
+  }
+
 }
+
 </style>
 
 
