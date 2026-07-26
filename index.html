@@ -43,6 +43,11 @@ body {
   --game-deep: #b83c1e;
   --game-tint: rgba(229,80,42,0.08);
 
+  --go: #17a34a;
+  --go-deep: #0f7c38;
+  --go-light: #22c55e;
+  --go-tint: rgba(23,163,74,0.14);
+
   font-family: 'Inter', Arial, sans-serif;
   color: var(--ink);
 
@@ -50,7 +55,11 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: var(--paper);
+  background:
+    radial-gradient(circle at 15% 0%, rgba(15,92,86,0.05), transparent 42%),
+    radial-gradient(circle at 100% 12%, rgba(229,80,42,0.045), transparent 40%),
+    radial-gradient(circle, rgba(18,21,28,0.05) 1px, transparent 1.4px) 0 0/22px 22px,
+    var(--paper);
 }
 
 
@@ -107,12 +116,20 @@ body {
   color: var(--ink);
 
   opacity: 0;
-  animation: riseIn 0.7s ease 0.15s forwards;
+  animation: riseIn 0.7s cubic-bezier(0.22,1,0.36,1) 0.15s forwards;
 }
 
 .hero-title em {
   font-style: normal;
-  color: var(--tool);
+
+  background: linear-gradient(100deg, var(--tool-deep), var(--tool) 35%, #2f8f86 50%, var(--tool) 65%, var(--tool-deep));
+  background-size: 250% 100%;
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  animation: emSheen 6s ease infinite;
 }
 
 .hero-subtitle {
@@ -266,17 +283,20 @@ body {
   border-radius: 14px;
 
   opacity: 0;
-  transform: translateY(16px);
+  filter: blur(3px);
+  transform: translateY(18px) scale(0.985);
   transition:
-    transform 0.5s cubic-bezier(0.22,1,0.36,1),
-    border-color 0.3s ease,
-    box-shadow 0.3s ease,
-    opacity 0.5s ease;
+    transform 0.55s cubic-bezier(0.22,1,0.36,1),
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    opacity 0.55s ease,
+    filter 0.55s ease;
 }
 
 .app-card.show {
   opacity: 1;
-  transform: translateY(0);
+  filter: blur(0);
+  transform: translateY(0) scale(1);
 }
 
 .app-card::before {
@@ -295,14 +315,23 @@ body {
 
 .app-card.is-tool:hover {
   border-color: var(--tool);
-  box-shadow: 0 10px 26px var(--tool-tint);
-  transform: translateY(-3px);
+  box-shadow: 0 16px 34px var(--tool-tint), 0 2px 8px rgba(15,23,42,0.05);
+  transform: translateY(-4px) scale(1.006);
 }
 
 .app-card.is-game:hover {
   border-color: var(--game);
-  box-shadow: 0 10px 26px var(--game-tint);
-  transform: translateY(-3px);
+  box-shadow: 0 16px 34px var(--game-tint), 0 2px 8px rgba(15,23,42,0.05);
+  transform: translateY(-4px) scale(1.006);
+}
+
+.app-card:hover .app-icon {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(18,21,28,0.08);
+}
+
+.app-icon {
+  transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.35s ease;
 }
 
 
@@ -393,13 +422,20 @@ body {
 ========================================================= */
 
 .download-btn {
+  position: relative;
+  overflow: hidden;
+
   display: inline-flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
 
-  padding: 8px 0;
+  padding: 10px 16px;
+  border-radius: 9px;
+  border: 1px solid transparent;
 
-  color: var(--ink) !important;
+  background: linear-gradient(135deg, var(--go-light), var(--go-deep));
+
+  color: #ffffff !important;
   text-decoration: none !important;
 
   font-family: 'JetBrains Mono', monospace;
@@ -407,20 +443,73 @@ body {
   font-weight: 600;
   letter-spacing: 0.03em;
 
-  border-bottom: 1.5px solid var(--line);
-  transition: border-color 0.25s ease, color 0.25s ease, gap 0.25s ease;
+  box-shadow:
+    0 3px 10px rgba(15,124,56,0.28),
+    0 0 0 0 rgba(23,163,74,0.45);
+
+  animation: ctaPulse 3.2s ease-in-out infinite;
+
+  transition:
+    transform 0.3s cubic-bezier(0.34,1.56,0.64,1),
+    box-shadow 0.3s ease,
+    gap 0.25s ease;
 }
 
-.app-card.is-tool .download-btn:hover {
-  color: var(--tool) !important;
-  border-color: var(--tool);
-  gap: 11px;
+.download-btn .cta-arrow {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
 }
 
-.app-card.is-game .download-btn:hover {
-  color: var(--game-deep) !important;
-  border-color: var(--game);
+.download-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -130%;
+  width: 55%;
+  height: 100%;
+
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+  transform: skewX(-18deg);
+
+  transition: left 0.7s ease;
+}
+
+.download-btn:hover {
+  transform: translateY(-2px);
   gap: 11px;
+  animation-play-state: paused;
+  box-shadow:
+    0 8px 20px rgba(15,124,56,0.4),
+    0 0 0 4px var(--go-tint);
+}
+
+.download-btn:hover::before {
+  left: 140%;
+}
+
+.download-btn:hover .cta-arrow {
+  transform: translateX(3px);
+}
+
+.download-btn:active {
+  transform: translateY(0) scale(0.97);
+}
+
+@keyframes ctaPulse {
+  0%, 100% {
+    box-shadow:
+      0 3px 10px rgba(15,124,56,0.28),
+      0 0 0 0 var(--go-tint);
+  }
+  50% {
+    box-shadow:
+      0 3px 10px rgba(15,124,56,0.28),
+      0 0 0 6px rgba(23,163,74,0.16);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .download-btn { animation: none; }
 }
 
 
@@ -470,6 +559,12 @@ body {
 @keyframes riseIn {
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes emSheen {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -549,15 +644,15 @@ body {
 
     <div class="hero-stats">
       <div class="hero-stat">
-        <span class="hero-stat-num">05</span>
+        <span class="hero-stat-num" data-count="5">00</span>
         <span class="hero-stat-label">Tools &amp; utilities</span>
       </div>
       <div class="hero-stat">
-        <span class="hero-stat-num">03</span>
+        <span class="hero-stat-num" data-count="3">00</span>
         <span class="hero-stat-label">Games</span>
       </div>
       <div class="hero-stat">
-        <span class="hero-stat-num">08</span>
+        <span class="hero-stat-num" data-count="8">00</span>
         <span class="hero-stat-label">Live on Google Play</span>
       </div>
     </div>
@@ -606,7 +701,7 @@ body {
               rel="noopener"
               class="download-btn"
             >
-              Get it on Google Play →
+              Get it on Google Play <span class="cta-arrow">→</span>
             </a>
           </div>
         </article>
@@ -636,7 +731,7 @@ body {
               rel="noopener"
               class="download-btn"
             >
-              Get it on Google Play →
+              Get it on Google Play <span class="cta-arrow">→</span>
             </a>
           </div>
         </article>
@@ -666,7 +761,7 @@ body {
               rel="noopener"
               class="download-btn"
             >
-              Get it on Google Play →
+              Get it on Google Play <span class="cta-arrow">→</span>
             </a>
           </div>
         </article>
@@ -696,7 +791,7 @@ body {
               rel="noopener"
               class="download-btn"
             >
-              Get it on Google Play →
+              Get it on Google Play <span class="cta-arrow">→</span>
             </a>
           </div>
         </article>
@@ -726,7 +821,7 @@ body {
               rel="noopener"
               class="download-btn"
             >
-              Get it on Google Play →
+              Get it on Google Play <span class="cta-arrow">→</span>
             </a>
           </div>
         </article>
@@ -770,7 +865,7 @@ body {
               rel="noopener"
               class="download-btn"
             >
-              Get it on Google Play →
+              Get it on Google Play <span class="cta-arrow">→</span>
             </a>
           </div>
         </article>
@@ -800,7 +895,7 @@ body {
               rel="noopener"
               class="download-btn"
             >
-              Get it on Google Play →
+              Get it on Google Play <span class="cta-arrow">→</span>
             </a>
           </div>
         </article>
@@ -830,7 +925,7 @@ body {
               rel="noopener"
               class="download-btn"
             >
-              Get it on Google Play →
+              Get it on Google Play <span class="cta-arrow">→</span>
             </a>
           </div>
         </article>
@@ -858,6 +953,28 @@ body {
 
 <script>
 (function () {
+
+  var nums = document.querySelectorAll(".hero-stat-num");
+
+  nums.forEach(function (el) {
+    var target = parseInt(el.getAttribute("data-count"), 10) || 0;
+    var current = 0;
+    var duration = 900;
+    var start = null;
+
+    function pad(n) { return n < 10 ? "0" + n : "" + n; }
+
+    function step(ts) {
+      if (!start) start = ts;
+      var progress = Math.min((ts - start) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      current = Math.round(eased * target);
+      el.textContent = pad(current);
+      if (progress < 1) requestAnimationFrame(step);
+    }
+
+    setTimeout(function () { requestAnimationFrame(step); }, 350);
+  });
 
   var cards = document.querySelectorAll(".app-card");
 
