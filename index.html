@@ -1,290 +1,886 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title translate="no">ZoujApps - Innovative Mobile Apps</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-            background: radial-gradient(circle at 10% 30%, #f8fafc, #eef2f8);
-            min-height: 100vh;
-            color: #0a2b3e;
-        }
-        .translate-container {
-            position: fixed; top: 20px; right: 20px; z-index: 1100;
-            background: rgba(255,255,255,0.9); backdrop-filter: blur(12px);
-            padding: 6px 16px; border-radius: 60px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-            border: 1px solid rgba(255,255,255,0.5); font-size: 14px;
-        }
-        .goog-te-banner-frame { display: none !important; }
-        body { top: 0px !important; }
-        .skiptranslate iframe { display: none !important; }
-        .goog-te-gadget { color: transparent !important; }
-        .goog-te-gadget .goog-te-combo { 
-            padding: 6px 14px; border-radius: 40px;
-            border: 1px solid #cbd5e1; background: white;
-            font-family: inherit; font-size: 13px; font-weight: 500; cursor: pointer;
-        }
-        .hero {
-            background: linear-gradient(125deg, #0b2f44 0%, #1b5379 100%);
-            color: white; padding: 70px 24px 90px; text-align: center;
-            clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%); margin-bottom: -10px;
-        }
-        .hero h1 { font-size: 4rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 20px; }
-        .hero h1 span {
-            background: linear-gradient(130deg, #FFE6B0, #FFB347);
-            background-clip: text; -webkit-background-clip: text; color: transparent;
-        }
-        .hero p { font-size: 1.3rem; opacity: 0.92; max-width: 650px; margin: 0 auto; }
-        .container { max-width: 1300px; margin: -30px auto 70px; padding: 0 24px; position: relative; z-index: 5; }
-        .apps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 40px; margin-top: 20px; }
-        .app-card {
-            background: rgba(255,255,255,0.98); border-radius: 48px;
-            box-shadow: 0 30px 45px -20px rgba(0,0,0,0.2);
-            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-            overflow: hidden; backdrop-filter: blur(2px);
-            border: 1px solid rgba(255,255,255,0.6);
-            cursor: pointer;
-        }
-        .app-card:hover { transform: translateY(-12px); box-shadow: 0 40px 60px -22px rgba(0,0,0,0.35); }
-        .card-img {
-            background: linear-gradient(135deg, #1e4e6e, #0c3146);
-            padding: 45px 20px; text-align: center;
-        }
-        .card-img .app-icon { font-size: 5.5rem; filter: drop-shadow(0 12px 14px rgba(0,0,0,0.3)); }
-        .card-content { padding: 32px 28px 36px; }
-        .card-content h3 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; color: #0a2b3e; }
-        .card-content .hook {
-            font-size: 1rem;
-            color: #FFB347;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
-        .card-content p { color: #2c4b6e; line-height: 1.5; font-size: 0.95rem; margin-bottom: 20px; }
-        .discover-btn {
-            background: #0a2b3e; color: white; border: none; padding: 14px 0;
-            width: 100%; border-radius: 50px; font-weight: 700; font-size: 1rem;
-            cursor: pointer; transition: all 0.25s; text-align: center;
-            display: inline-block; text-decoration: none;
-        }
-        .discover-btn:hover { background: #1b5379; transform: scale(1.02); }
-        
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.8);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(6px);
-        }
-        .modal-content {
-            background: white;
-            max-width: 550px;
-            width: 90%;
-            border-radius: 48px;
-            padding: 32px 28px;
-            position: relative;
-            max-height: 85vh;
-            overflow-y: auto;
-            box-shadow: 0 40px 70px rgba(0,0,0,0.4);
-        }
-        .modal-close {
-            position: absolute;
-            top: 20px; right: 24px;
-            font-size: 32px;
-            font-weight: bold;
-            cursor: pointer;
-            color: #0a2b3e;
-            transition: 0.2s;
-        }
-        .modal-close:hover { color: #FFB347; }
-        .modal-icon { font-size: 4rem; text-align: center; margin-bottom: 12px; }
-        .modal-title { font-size: 2rem; font-weight: 800; margin-bottom: 8px; text-align: center; }
-        .modal-description { color: #2c4b6e; line-height: 1.6; margin: 20px 0; }
-        .modal-features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 20px 0;
-            justify-content: center;
-        }
-        .modal-feature {
-            background: #eef3fc;
-            padding: 6px 16px;
-            border-radius: 40px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: #1b5379;
-        }
-        .modal-buttons {
-            display: flex;
-            gap: 12px;
-            margin-top: 28px;
-        }
-        .modal-buttons .btn {
-            flex: 1;
-            text-align: center;
-            text-decoration: none;
-            display: block;
-        }
-        footer {
-            text-align: center; padding: 36px 24px; background: #0a2b3e;
-            color: #b9d0e5; font-size: 0.85rem;
-        }
-        footer a { color: #FFD966; text-decoration: none; }
-        @media (max-width: 700px) {
-            .hero h1 { font-size: 2.5rem; }
-            .hero p { font-size: 1rem; }
-            .apps-grid { grid-template-columns: 1fr; }
-            .card-content h3 { font-size: 1.6rem; }
-        }
-    </style>
-</head>
-<body>
+<style>
+/* =========================================================
+   FONTS
+========================================================= */
 
-<div class="translate-container">
-    <div id="google_translate_element"></div>
-</div>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap');
 
-<section class="hero">
-    <h1><span class="notranslate">Zouj<span>Apps</span></span></h1>
-    <p>Innovative mobile tools that make everyday life simpler and smarter.</p>
-</section>
 
-<div class="container">
-    <div class="apps-grid" id="appsGrid"></div>
-</div>
+/* =========================================================
+   GLOBAL RESET
+========================================================= */
 
-<footer>
-    <p>© 2026 <span class="notranslate">ZoujApps</span> — Clean, reliable, user‑first apps</p>
-</footer>
+html,
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
+  min-height: 100%;
+  background: #eef1f5;
+}
 
-<!-- Modal structure -->
-<div id="appModal" class="modal">
-    <div class="modal-content">
-        <span class="modal-close">&times;</span>
-        <div id="modalIcon" class="modal-icon"></div>
-        <div id="modalTitle" class="modal-title"></div>
-        <div id="modalDescription" class="modal-description"></div>
-        <div id="modalFeatures" class="modal-features"></div>
-        <div id="modalButtons" class="modal-buttons"></div>
+* {
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   TOKENS
+========================================================= */
+
+.apps-page {
+  --paper: #eef1f5;
+  --card: #ffffff;
+  --ink: #12151c;
+  --ink-soft: #5b6472;
+  --line: rgba(18,21,28,0.10);
+
+  --tool: #0f5c56;
+  --tool-deep: #0a3f3b;
+  --tool-tint: rgba(15,92,86,0.08);
+
+  --game: #e5502a;
+  --game-deep: #b83c1e;
+  --game-tint: rgba(229,80,42,0.08);
+
+  font-family: 'Inter', Arial, sans-serif;
+  color: var(--ink);
+
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+}
+
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero-section {
+  width: 100%;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 72px 28px 52px;
+
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 48px;
+  align-items: end;
+}
+
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  margin: 0 0 22px;
+
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+
+  opacity: 0;
+  animation: riseIn 0.7s ease 0.05s forwards;
+}
+
+.hero-eyebrow::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--game);
+  box-shadow: 0 0 0 3px var(--game-tint);
+}
+
+.hero-title {
+  margin: 0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(34px, 4.4vw, 54px);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+
+  opacity: 0;
+  animation: riseIn 0.7s ease 0.15s forwards;
+}
+
+.hero-title em {
+  font-style: normal;
+  color: var(--tool);
+}
+
+.hero-subtitle {
+  margin: 18px 0 0;
+  max-width: 480px;
+
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+
+  opacity: 0;
+  animation: riseIn 0.7s ease 0.25s forwards;
+}
+
+.hero-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+
+  border-left: 1px solid var(--line);
+  padding-left: 30px;
+
+  opacity: 0;
+  animation: riseIn 0.7s ease 0.35s forwards;
+}
+
+.hero-stat {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.hero-stat:last-child {
+  border-bottom: none;
+}
+
+.hero-stat-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 26px;
+  font-weight: 600;
+  color: var(--ink);
+  min-width: 34px;
+}
+
+.hero-stat-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+
+/* =========================================================
+   SECTION HEADERS
+========================================================= */
+
+.apps-section {
+  width: 100%;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 28px 30px;
+  flex: 1;
+}
+
+.category-block + .category-block {
+  margin-top: 54px;
+}
+
+.category-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 18px;
+
+  padding-bottom: 16px;
+  margin-bottom: 26px;
+  border-bottom: 1px solid var(--line);
+}
+
+.category-title {
+  margin: 0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.category-block.is-tool .category-title::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--tool);
+  margin-right: 10px;
+  transform: translateY(1px);
+}
+
+.category-block.is-game .category-title::before {
+  content: "";
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: var(--game);
+  margin-right: 10px;
+  transform: translateY(1px);
+}
+
+.category-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.apps-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 18px;
+}
+
+
+/* =========================================================
+   APPLICATION CARD
+========================================================= */
+
+.app-card {
+  position: relative;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+
+  padding: 22px 22px 22px 26px;
+
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    transform 0.5s cubic-bezier(0.22,1,0.36,1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    opacity 0.5s ease;
+}
+
+.app-card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.app-card::before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  left: 0;
+  width: 3px;
+  border-radius: 2px;
+  transition: background 0.3s ease;
+}
+
+.app-card.is-tool::before { background: var(--tool); }
+.app-card.is-game::before { background: var(--game); }
+
+.app-card.is-tool:hover {
+  border-color: var(--tool);
+  box-shadow: 0 10px 26px var(--tool-tint);
+  transform: translateY(-3px);
+}
+
+.app-card.is-game:hover {
+  border-color: var(--game);
+  box-shadow: 0 10px 26px var(--game-tint);
+  transform: translateY(-3px);
+}
+
+
+/* =========================================================
+   ICON
+========================================================= */
+
+.app-icon-wrapper {
+  flex: none;
+  width: 68px;
+  height: 68px;
+}
+
+.app-icon {
+  width: 68px;
+  height: 68px;
+  display: block;
+  object-fit: contain;
+  border-radius: 14px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+}
+
+
+/* =========================================================
+   APP CONTENT
+========================================================= */
+
+.app-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.app-head {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 9px 10px;
+  margin-bottom: 4px;
+}
+
+.app-name {
+  margin: 0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 17.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.app-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 5px;
+}
+
+.app-card.is-tool .app-tag {
+  color: var(--tool);
+  background: var(--tool-tint);
+}
+
+.app-card.is-game .app-tag {
+  color: var(--game-deep);
+  background: var(--game-tint);
+}
+
+.app-tagline {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+.app-description {
+  margin: 0 0 14px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+
+/* =========================================================
+   DOWNLOAD LINK
+========================================================= */
+
+.download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 8px 0;
+
+  color: var(--ink) !important;
+  text-decoration: none !important;
+
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+
+  border-bottom: 1.5px solid var(--line);
+  transition: border-color 0.25s ease, color 0.25s ease, gap 0.25s ease;
+}
+
+.app-card.is-tool .download-btn:hover {
+  color: var(--tool) !important;
+  border-color: var(--tool);
+  gap: 11px;
+}
+
+.app-card.is-game .download-btn:hover {
+  color: var(--game-deep) !important;
+  border-color: var(--game);
+  gap: 11px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.site-footer {
+  width: 100%;
+  margin-top: 60px;
+
+  border-top: 1px solid var(--line);
+  padding: 34px 20px 28px;
+
+  text-align: center;
+}
+
+.footer-brand {
+  margin: 0 0 6px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.footer-text {
+  margin: 0 auto 12px;
+  max-width: 480px;
+  color: var(--ink-soft);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.footer-copy {
+  margin: 0;
+  font-family: 'JetBrains Mono', monospace;
+  color: #9aa2af;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+}
+
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-card, .hero-eyebrow, .hero-title, .hero-subtitle, .hero-stats {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+
+/* =========================================================
+   TABLET / MOBILE
+========================================================= */
+
+@media (max-width: 860px) {
+  .hero-section {
+    grid-template-columns: 1fr;
+    gap: 26px;
+    padding: 52px 22px 36px;
+  }
+
+  .hero-stats {
+    border-left: none;
+    padding-left: 0;
+    flex-direction: row;
+    gap: 22px;
+  }
+
+  .hero-stat {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    border-bottom: none;
+    padding: 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .apps-section { padding: 0 16px 20px; }
+
+  .apps-grid { grid-template-columns: 1fr; }
+
+  .app-card {
+    flex-direction: column;
+    padding: 20px 18px 20px 22px;
+  }
+
+  .app-icon-wrapper { width: 56px; height: 56px; }
+  .app-icon { width: 56px; height: 56px; }
+}
+</style>
+
+
+<div class="apps-page">
+
+  <!-- =====================================================
+       HERO
+  ====================================================== -->
+
+  <section class="hero-section">
+
+    <div>
+      <p class="hero-eyebrow">zoujapps — android studio</p>
+
+      <h1 class="hero-title">
+        Apps built to be used <em>daily</em> — and a few just to have fun.
+      </h1>
+
+      <p class="hero-subtitle">
+        Eight independent apps on Google Play, spanning everyday
+        utilities and casual games. Free to download, built to be
+        simple.
+      </p>
     </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-num">05</span>
+        <span class="hero-stat-label">Tools &amp; utilities</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">03</span>
+        <span class="hero-stat-label">Games</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-num">08</span>
+        <span class="hero-stat-label">Live on Google Play</span>
+      </div>
+    </div>
+
+  </section>
+
+
+  <!-- =====================================================
+       APPS
+  ====================================================== -->
+
+  <main class="apps-section">
+
+    <!-- TOOLS & UTILITIES -->
+    <div class="category-block is-tool">
+
+      <div class="category-head">
+        <h2 class="category-title">Tools &amp; Utilities</h2>
+        <span class="category-count">05 APPS</span>
+      </div>
+
+      <div class="apps-grid">
+
+        <article class="app-card is-tool">
+          <div class="app-icon-wrapper">
+            <img
+              src="https://play-lh.googleusercontent.com/SDwbj8XbBZpnt_xAPVTYxo4CGm_CyR3Z1jc6HwP_BPwxQEFscvyLOyFd7Q0SZ-cC1qdA-Fceuz-39VX26WmB-A=w480-h960-rw"
+              class="app-icon"
+              alt="Driver Assistant"
+            >
+          </div>
+          <div class="app-info">
+            <div class="app-head">
+              <h3 class="app-name">Driver Assistant</h3>
+              <span class="app-tag">Utility</span>
+            </div>
+            <p class="app-tagline">Smart vehicle maintenance tracker</p>
+            <p class="app-description">
+              Never miss an oil change or filter replacement again.
+              Manage multiple vehicles, track maintenance cycles, and
+              get smart reminders — all in one simple app.
+            </p>
+            <a
+              href="https://play.google.com/store/apps/details?id=com.zoujapps.driver_assistant"
+              target="_blank"
+              rel="noopener"
+              class="download-btn"
+            >
+              Get it on Google Play →
+            </a>
+          </div>
+        </article>
+
+        <article class="app-card is-tool">
+          <div class="app-icon-wrapper">
+            <img
+              src="https://play-lh.googleusercontent.com/nIm3XJK8YO2y1ipaiJZL96K9041sNGwnfwFObQN6f5GhLUtIorkuwsD8ebuOVfyiT-_Foua4ktu_gFqwZg5P=w480-h960-rw"
+              class="app-icon"
+              alt="Profit Track Pro"
+            >
+          </div>
+          <div class="app-info">
+            <div class="app-head">
+              <h3 class="app-name">Profit Track Pro</h3>
+              <span class="app-tag">Utility</span>
+            </div>
+            <p class="app-tagline">Cash flow, profit &amp; loss tracker</p>
+            <p class="app-description">
+              Track your daily profits and losses like never before.
+              Perfect for business owners, freelancers, and anyone
+              who wants clear financial records.
+            </p>
+            <a
+              href="https://play.google.com/store/apps/details?id=com.zoujapps.profit_track_pro"
+              target="_blank"
+              rel="noopener"
+              class="download-btn"
+            >
+              Get it on Google Play →
+            </a>
+          </div>
+        </article>
+
+        <article class="app-card is-tool">
+          <div class="app-icon-wrapper">
+            <img
+              src="https://lh3.googleusercontent.com/vEBXk5wUQnUo2fVtDQF-1lEMh7h0QUBdmLHTZQU1ODR11Khg3L46j_E58a5IEiuDTJwrTrQ13fpB-iimmka6"
+              class="app-icon"
+              alt="Expense Monitor"
+            >
+          </div>
+          <div class="app-info">
+            <div class="app-head">
+              <h3 class="app-name">Expense Monitor</h3>
+              <span class="app-tag">Utility</span>
+            </div>
+            <p class="app-tagline">Track your daily finances</p>
+            <p class="app-description">
+              Monitor your expenses and income with ease. Record
+              transactions, assign categories and payment methods,
+              and track your savings progress over time.
+            </p>
+            <a
+              href="https://play.google.com/store/apps/details?id=com.zoujapps.expense_monitor"
+              target="_blank"
+              rel="noopener"
+              class="download-btn"
+            >
+              Get it on Google Play →
+            </a>
+          </div>
+        </article>
+
+        <article class="app-card is-tool">
+          <div class="app-icon-wrapper">
+            <img
+              src="https://lh3.googleusercontent.com/4oxM5IaSoLZn75_91R4iXG3SIwdnf-9SHVzD8QFiB2UjDcRZM1WQtwW0pfIPJncbcl_s9LCfK-84e61zPemZvUg"
+              class="app-icon"
+              alt="Smart School"
+            >
+          </div>
+          <div class="app-info">
+            <div class="app-head">
+              <h3 class="app-name">Smart School</h3>
+              <span class="app-tag">Utility</span>
+            </div>
+            <p class="app-tagline">Complete school management</p>
+            <p class="app-description">
+              A modern school automation software with over 30
+              modules. Manage attendance, homework, exams, fees, and
+              communication between teachers, students, and parents.
+            </p>
+            <a
+              href="https://play.google.com/store/apps/details?id=com.zoujapps.smart_school"
+              target="_blank"
+              rel="noopener"
+              class="download-btn"
+            >
+              Get it on Google Play →
+            </a>
+          </div>
+        </article>
+
+        <article class="app-card is-tool">
+          <div class="app-icon-wrapper">
+            <img
+              src="https://lh3.googleusercontent.com/8XWDn_H8dQqe5CilTvHoLme8HBIfeVuZcM15i-m2n8DdzNASicJsS7uBbeZJFYpxTZeAQBCDsGIX0vs3MCIs"
+              class="app-icon"
+              alt="Wake Enforcer"
+            >
+          </div>
+          <div class="app-info">
+            <div class="app-head">
+              <h3 class="app-name">Wake Enforcer</h3>
+              <span class="app-tag">Utility</span>
+            </div>
+            <p class="app-tagline">Smart alarm &amp; productivity</p>
+            <p class="app-description">
+              A smart alarm app that enforces your wake-up routine.
+              Set challenging tasks to turn off the alarm and start
+              your day with energy and focus.
+            </p>
+            <a
+              href="https://play.google.com/store/apps/details?id=com.zoujapps.wake_enforcer"
+              target="_blank"
+              rel="noopener"
+              class="download-btn"
+            >
+              Get it on Google Play →
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+
+    <!-- GAMES -->
+    <div class="category-block is-game">
+
+      <div class="category-head">
+        <h2 class="category-title">Games</h2>
+        <span class="category-count">03 APPS</span>
+      </div>
+
+      <div class="apps-grid">
+
+        <article class="app-card is-game">
+          <div class="app-icon-wrapper">
+            <img
+              src="https://lh3.googleusercontent.com/USwbRrg6_Q2PHSpiopWsfNDFNb3esjyrHMVLSTi6bIor1tONXLI3c-J95-2bO8CVWQGao-yim-AsJVdy1dKkG-I"
+              class="app-icon"
+              alt="BrickSmash"
+            >
+          </div>
+          <div class="app-info">
+            <div class="app-head">
+              <h3 class="app-name">BrickSmash</h3>
+              <span class="app-tag">Game</span>
+            </div>
+            <p class="app-tagline">Ball puzzle game</p>
+            <p class="app-description">
+              An original ball puzzle game that's easy to play but
+              very challenging. Aim and shoot, clear all the blocks
+              as fast as you can, and watch out for special blocks.
+            </p>
+            <a
+              href="https://play.google.com/store/apps/details?id=com.zoujapps.bricksmash"
+              target="_blank"
+              rel="noopener"
+              class="download-btn"
+            >
+              Get it on Google Play →
+            </a>
+          </div>
+        </article>
+
+        <article class="app-card is-game">
+          <div class="app-icon-wrapper">
+            <img
+              src="https://lh3.googleusercontent.com/44BPjBKnI6BYJ13Vtk49c5HWWEquR2GqyLxoVRkUyVrgikR2G-07tBVYjSPL7jewRV6qcFjt5Ja5oER_SRUVNg"
+              class="app-icon"
+              alt="Genius Run"
+            >
+          </div>
+          <div class="app-info">
+            <div class="app-head">
+              <h3 class="app-name">Genius Run</h3>
+              <span class="app-tag">Game</span>
+            </div>
+            <p class="app-tagline">Endless runner game</p>
+            <p class="app-description">
+              An exciting endless runner game. Dodge obstacles,
+              collect power-ups, and challenge yourself to achieve the
+              highest score in this fast-paced adventure.
+            </p>
+            <a
+              href="https://play.google.com/store/apps/details?id=com.zoujapps.genius_run"
+              target="_blank"
+              rel="noopener"
+              class="download-btn"
+            >
+              Get it on Google Play →
+            </a>
+          </div>
+        </article>
+
+        <article class="app-card is-game">
+          <div class="app-icon-wrapper">
+            <img
+              src="https://lh3.googleusercontent.com/LyW1dZ01-JejFxcJZO4dzzEuTEz4_XRVRQ21L4X4_ob9xavhT-2ImLNB81S778CpxcHBCZWno8pXnKF4_9vqOdc"
+              class="app-icon"
+              alt="Bubble Pop Legends"
+            >
+          </div>
+          <div class="app-info">
+            <div class="app-head">
+              <h3 class="app-name">Bubble Pop Legends</h3>
+              <span class="app-tag">Game</span>
+            </div>
+            <p class="app-tagline">Classic bubble shooter</p>
+            <p class="app-description">
+              Pop bubbles in this classic puzzle game. Match bubbles
+              of the same color to clear the board and move on to the
+              next level.
+            </p>
+            <a
+              href="https://play.google.com/store/apps/details?id=com.zoujapps.bubble_pop_legends"
+              target="_blank"
+              rel="noopener"
+              class="download-btn"
+            >
+              Get it on Google Play →
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+  </main>
+
+
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+
+  <footer class="site-footer">
+    <h3 class="footer-brand">zoujapps</h3>
+    <p class="footer-text">
+      Creating useful, simple and enjoyable digital experiences.
+    </p>
+    <p class="footer-copy">© 2026 zoujapps. All rights reserved.</p>
+  </footer>
+
 </div>
 
+
 <script>
-    // App data (all in English)
-    const apps = [
-        {
-            id: "expense",
-            name: "Expense Monitor",
-            icon: "💰📊",
-            hook: "Smart daily loss tracker",
-            shortDesc: "Log your expenses and get instant weekly, monthly & yearly summaries.",
-            fullDesc: "Expense Monitor helps you take control of your daily spending. Record every expense with tags, view detailed charts, and get actionable insights. All data stays on your device – no internet required for core features.",
-            features: ["📅 Daily tracking", "📊 Weekly & monthly summaries", "🌍 Multi-language support", "🔒 100% offline", "📈 Spending insights", "🗓️ Yearly reports"],
-            downloadLink: "https://play.google.com/store/apps/details?id=com.zoujapps.expense_monitor",
-            privacyLink: "expense-monitor-privacy.html"
-        },
-        {
-            id: "driver",
-            name: "Driver Assistant",
-            icon: "🚗⚙️",
-            hook: "Smart vehicle maintenance tracker",
-            shortDesc: "Never miss an oil or filter change again.",
-            fullDesc: "Driver Assistant keeps your car in perfect shape. Add multiple vehicles, set service intervals, and get smart reminders. The automatic odometer and maintenance log make car care effortless – fully offline.",
-            features: ["📊 Multiple vehicles", "⏰ Smart reminders", "📈 Auto odometer", "🔒 100% offline", "🛢️ Oil & filter tracking", "📅 Service history"],
-            downloadLink: "https://play.google.com/store/apps/details?id=com.zoujapps.driver_assistant",
-            privacyLink: "https://zoujapps.github.io/privacy-driver-assistant.html"
-        },
-        {
-            id: "profit",
-            name: "Profit Track Pro",
-            icon: "📈💼",
-            hook: "Track profits & losses like a pro",
-            shortDesc: "Complete financial diary with 10-year archive, 50+ currencies, 6 languages.",
-            fullDesc: "Profit Track Pro is your ultimate financial companion. Record daily profits and losses, browse any month up to 10 years back, and get accurate summaries. Enjoy dark/light mode, a privacy mask for numbers, full backup/restore, and an interactive tutorial.",
-            features: ["📆 10-year archive", "🌍 6 languages", "💱 50+ currencies", "🌙 Dark/Light mode", "👁️ Privacy mask", "💾 Backup & restore", "📊 Daily/Weekly/Monthly summaries", "📖 Interactive guide"],
-            downloadLink: "https://play.google.com/store/apps/details?id=com.zoujapps.profit_track_pro",  // change when available
-            privacyLink: "https://zoujapps.github.io/Profit-Track-Pro-privacy.html"
+(function () {
+
+  var cards = document.querySelectorAll(".app-card");
+
+  if (!("IntersectionObserver" in window)) {
+    cards.forEach(function (card) { card.classList.add("show"); });
+    return;
+  }
+
+  var observer = new IntersectionObserver(
+    function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var card = entry.target;
+          var delay = Array.from(cards).indexOf(card) % 6 * 60;
+          setTimeout(function () { card.classList.add("show"); }, delay);
+          observer.unobserve(card);
         }
-    ];
+      });
+    },
+    { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+  );
 
-    // Render cards
-    const grid = document.getElementById("appsGrid");
-    apps.forEach(app => {
-        const card = document.createElement("div");
-        card.className = "app-card";
-        card.innerHTML = `
-            <div class="card-img">
-                <div class="app-icon">${app.icon}</div>
-            </div>
-            <div class="card-content">
-                <h3>${app.name}</h3>
-                <div class="hook">✨ ${app.hook}</div>
-                <p>${app.shortDesc}</p>
-                <button class="discover-btn" data-id="${app.id}">🔍 Discover App</button>
-            </div>
-        `;
-        grid.appendChild(card);
-    });
+  cards.forEach(function (card) { observer.observe(card); });
 
-    // Modal elements
-    const modal = document.getElementById("appModal");
-    const closeModal = document.querySelector(".modal-close");
-    const modalIcon = document.getElementById("modalIcon");
-    const modalTitle = document.getElementById("modalTitle");
-    const modalDescription = document.getElementById("modalDescription");
-    const modalFeatures = document.getElementById("modalFeatures");
-    const modalButtons = document.getElementById("modalButtons");
-
-    function openModal(appId) {
-        const app = apps.find(a => a.id === appId);
-        if (!app) return;
-        modalIcon.textContent = app.icon;
-        modalTitle.textContent = app.name;
-        modalDescription.textContent = app.fullDesc;
-        // render feature tags
-        modalFeatures.innerHTML = app.features.map(f => `<span class="modal-feature">${f}</span>`).join("");
-        // render buttons
-        modalButtons.innerHTML = `
-            <a href="${app.downloadLink}" class="btn" target="_blank">📲 Download</a>
-            <a href="${app.privacyLink}" class="btn btn-privacy" target="_blank">🔒 Privacy Policy</a>
-        `;
-        modal.style.display = "flex";
-    }
-
-    // Add event listeners to all discover buttons (after they are rendered)
-    setTimeout(() => {
-        document.querySelectorAll(".discover-btn").forEach(btn => {
-            btn.addEventListener("click", (e) => {
-                e.stopPropagation();
-                const id = btn.getAttribute("data-id");
-                openModal(id);
-            });
-        });
-    }, 0);
-
-    closeModal.onclick = () => { modal.style.display = "none"; };
-    window.onclick = (e) => { if (e.target === modal) modal.style.display = "none"; };
+})();
 </script>
-
-<script>
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-            pageLanguage: 'en',
-            includedLanguages: 'ar,en,fr,es,pt',
-            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-            autoDisplay: false
-        }, 'google_translate_element');
-    }
-</script>
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-</body>
-</html>
